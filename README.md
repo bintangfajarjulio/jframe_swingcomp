@@ -1,0 +1,2 @@
+# JFrameSimpleComp
+Tugas Combine GUI
