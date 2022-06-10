@@ -23,6 +23,7 @@ class PanelFrame extends JFrame {
 	private JTree tree;
 	private JList<String> list = new JList<>();
 	private JTable tabelData;
+	private int index;
 
 	private String[] columnNames = { "Dummy" };
 	private Object[][] cells = { { null } };
@@ -30,6 +31,7 @@ class PanelFrame extends JFrame {
 	DefaultListModel<String> modelList = new DefaultListModel<>();
 
 	private boolean removeNull = true;
+	DefaultMutableTreeNode selectedElement;
 
 	public PanelFrame() {
 		setTitle("Combine Panel");
@@ -83,6 +85,53 @@ class PanelFrame extends JFrame {
 			if (removeNull) {
 				dataModel.removeRow(0);
 				removeNull = false;
+			}
+		});
+
+		JButton button2 = new JButton("Delete");
+		inputPanel.add(button2);
+
+		button2.addActionListener(event -> {
+			try {
+				DefaultTableModel dataModel = (DefaultTableModel) tabelData.getModel();
+				index = list.getSelectedIndex();
+				int row = tabelData.getSelectedRow();
+
+				if (row != -1)
+					index = row;
+
+				try {
+					DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) tree.getSelectionPath()
+							.getLastPathComponent();
+
+					for (int i = 0; i < dataModel.getRowCount(); i++) {
+						if (((String) dataModel.getValueAt(i, 0)).equals(selectedElement.getUserObject())) {
+							index = i;
+						}
+					}
+				}
+
+				catch (Exception e) {
+
+				}
+
+				DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+				TreePath[] paths = tree.getSelectionPaths();
+				if (paths != null) {
+					for (TreePath path : paths) {
+						DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
+						if (node.getParent() != null) {
+							model.removeNodeFromParent(node);
+						}
+					}
+				}
+
+				modelList.remove(index);
+				dataModel.removeRow(index);
+			}
+
+			catch (Exception e) {
+
 			}
 		});
 
