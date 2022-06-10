@@ -1,2 +1,2 @@
 # JFrameSimpleComp
-Tugas Combine GUI
+Tugas Combine GUI JTable, JTree, JList
