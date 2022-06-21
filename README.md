@@ -1,2 +1,2 @@
 # JFrameSimpleComp
-Tugas Combine GUI JTable, JTree, JList
+Menyatukan komponen GUI JTable, JTree, dan JList dalam satu frame dan bisa diinput datanya serta dihapus
